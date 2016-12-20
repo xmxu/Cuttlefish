@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.github.xmxu.cf.sample.MainActivity">
+
+    <Button
+        android:id="@+id/qq_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onQQLogin"
+        android:text="QQ登录"/>
+    <Button
+        android:id="@+id/qq_share_qzone_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onQQShareQZone"
+        android:text="QQ分享到空间"/>
+    <Button
+        android:id="@+id/qq_share_friend_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onQQShareFriend"
+        android:text="QQ分享到朋友"/>
+
+    <Button
+        android:id="@+id/weibo_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onWeiboLogin"
+        android:text="微博登录"/>
+
+    <Button
+        android:id="@+id/weibo_share_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onWeiboShare"
+        android:text="微博分享"/>
+
+    <Button
+        android:id="@+id/wechat_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onWechatLogin"
+        android:text="微信登录"/>
+
+    <Button
+        android:id="@+id/wechat_share_session_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onWechatSessionShare"
+        android:text="微信分享到朋友"/>
+
+    <Button
+        android:id="@+id/wechat_share_timeline_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onWechatTimelineShare"
+        android:text="微信分享到朋友圈"/>
+
+
+</LinearLayout>
