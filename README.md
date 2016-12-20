@@ -21,4 +21,10 @@ Cuttlefish.with(context).share()
             .link("http://link...").callback(mShareResultCallback).to(QQShareHandler.get(QQShareHandler.QZONE));
 ```
 
+```
+dependencies {
+            compile 'com.github.XMXu.Cuttlefish:library:v1.0'
+}
+```
+
 #####更多详情见[app](https://github.com/XMXu/Cuttlefish/tree/master/app)
