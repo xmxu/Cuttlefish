@@ -21,6 +21,5 @@ public class WechatEventHandler implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp baseResp) {
-        Log.d(TAG, "onResp() called with: baseResp = [" + baseResp + "]");
     }
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.github.xmxu.cf.Callback;
 import com.github.xmxu.cf.Config;
@@ -38,8 +37,6 @@ import java.util.concurrent.Executors;
 
 public class WeiboLoginHandler extends SimpleLoginHandler<LoginResult> {
 
-    private static final String TAG = "WeiboLoginHandler";
-
     private AuthInfo mAuthInfo;
     private Oauth2AccessToken mAccessToken;
     private SsoHandler mSsoHandler;
@@ -62,7 +59,7 @@ public class WeiboLoginHandler extends SimpleLoginHandler<LoginResult> {
         this.mTag = tag;
         mAppContext = activity.getApplicationContext();
         if (mAuthInfo == null) {
-            mAuthInfo = new AuthInfo(activity.getApplicationContext(), Config.WEIBO_APPID, Config.REDIRECT_URL, Config.SCOPE);
+            mAuthInfo = new AuthInfo(activity.getApplicationContext(), Config.get().getWeiboAppId(), Config.get().getWeiboRedirectUrl(), Config.get().getWeiboScope());
         }
         mSsoHandler = new SsoHandler(activity, mAuthInfo);
 
@@ -111,8 +108,8 @@ public class WeiboLoginHandler extends SimpleLoginHandler<LoginResult> {
 
         String urlStr = String.format("https://api.weibo.com/oauth2/access_token?" +
                         "client_id=%s&client_secret=%s" +
-                        "&grant_type=refresh_token&redirect_uri=%s&refresh_token=%s", Config.WEIBO_APPID,
-                Config.WEIBO_APPKEY, Config.REDIRECT_URL, refreshToken);
+                        "&grant_type=refresh_token&redirect_uri=%s&refresh_token=%s", Config.get().getWeiboAppId(),
+                Config.get().getWeiboAppKey(), Config.get().getWeiboRedirectUrl(), refreshToken);
         try {
             URL url = new URL(urlStr);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -162,8 +159,6 @@ public class WeiboLoginHandler extends SimpleLoginHandler<LoginResult> {
         public void onComplete(Bundle values) {
             //从bundle 解析
             mAccessToken = Oauth2AccessToken.parseAccessToken(values);
-            Log.d(TAG, "onComplete() called with: values = [" + mAccessToken + "]");
-
             LoginResult result = new LoginResult();
             result.setTag(mTag);
             if (mAccessToken.isSessionValid()) {
@@ -199,7 +194,6 @@ public class WeiboLoginHandler extends SimpleLoginHandler<LoginResult> {
 
         @Override
         public void onWeiboException(WeiboException e) {
-            Log.d("Sina", "Exception: " + e.getMessage());
             if (mCallback != null) {
                 mCallback.onFailure(new Result(Integer.MAX_VALUE, e.getMessage(), mTag));
             }

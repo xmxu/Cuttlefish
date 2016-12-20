@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.github.xmxu.cf.Callback;
 import com.github.xmxu.cf.Config;
@@ -35,8 +34,6 @@ import java.util.concurrent.Executors;
 
 public class WechatLoginHandler extends SimpleLoginHandler<LoginResult> implements IWXAPIEventHandler {
 
-    private static final String TAG = "WechatLoginHandler";
-
     private IWXAPI api;
     private Callback<LoginResult> mCallback;
     private Object mTag;
@@ -58,7 +55,7 @@ public class WechatLoginHandler extends SimpleLoginHandler<LoginResult> implemen
         mTag = tag;
         WechatHelper.getInstance().setCurrentHandler(this);
 
-        api = WXAPIFactory.createWXAPI(activity, Config.WECHAT_APPID, true);
+        api = WXAPIFactory.createWXAPI(activity, Config.get().getWechatAppId(), true);
         if (!api.isWXAppInstalled()) {
             if (callback != null) {
                 callback.onFailure(new Result(Result.Code.NO_CLIENT, "No client", tag));
@@ -66,11 +63,11 @@ public class WechatLoginHandler extends SimpleLoginHandler<LoginResult> implemen
             return;
         }
 
-        api.registerApp(Config.WECHAT_APPID);
+        api.registerApp(Config.get().getWechatAppId());
 
         final SendAuth.Req req = new SendAuth.Req();
-        req.state = "lyy_auth";
-        req.scope = "snsapi_userinfo";
+        req.state = activity.getPackageName() + "_auth";
+        req.scope = Config.get().getWechatScope();
         if (api != null) {
             api.sendReq(req);
         }
@@ -92,7 +89,6 @@ public class WechatLoginHandler extends SimpleLoginHandler<LoginResult> implemen
 
     @Override
     public void onResp(final BaseResp baseResp) {
-        Log.d(TAG, "onResp() called with: baseResp = [" + baseResp + "]");
         if (baseResp instanceof SendAuth.Resp) {
             //登录
             switch (baseResp.errCode) {
@@ -130,7 +126,7 @@ public class WechatLoginHandler extends SimpleLoginHandler<LoginResult> implemen
         // &refresh_token=
 
         String urlString = String.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
-                Config.WECHAT_APPID, Config.WECHAT_APPKEY, code);
+                Config.get().getWechatAppId(), Config.get().getWechatAppKey(), code);
         try {
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

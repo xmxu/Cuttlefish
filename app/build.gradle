@@ -20,7 +20,7 @@ android {
 
         //签名配置
         release {
-
+            
         }
     }
 

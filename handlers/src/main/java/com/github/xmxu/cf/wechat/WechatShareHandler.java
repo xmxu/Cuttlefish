@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.github.xmxu.cf.Callback;
 import com.github.xmxu.cf.Config;
@@ -37,8 +36,6 @@ import java.lang.annotation.RetentionPolicy;
 
 public class WechatShareHandler extends SimpleShareHandler<ShareResult> implements IWXAPIEventHandler {
 
-    private static final String TAG = "WechatShareHandler";
-
     private Callback<ShareResult> mCallback;
     private Object mTag;
     private IWXAPI api;
@@ -51,7 +48,6 @@ public class WechatShareHandler extends SimpleShareHandler<ShareResult> implemen
 
     @Override
     public void onResp(BaseResp baseResp) {
-        Log.d(TAG, "onResp() called with: baseResp = [" + baseResp + "]");
         if (baseResp instanceof SendMessageToWX.Resp) {
             //登录
             switch (baseResp.errCode) {
@@ -109,7 +105,7 @@ public class WechatShareHandler extends SimpleShareHandler<ShareResult> implemen
         mCallback = callback;
         mTag = tag;
 
-        api = WXAPIFactory.createWXAPI(activity, Config.WECHAT_APPID, true);
+        api = WXAPIFactory.createWXAPI(activity, Config.get().getWechatAppId(), true);
         if (!api.isWXAppInstalled()) {
             if (mCallback != null) {
                 mCallback.onFailure(new Result(Result.Code.NO_CLIENT, "No client", tag));
@@ -118,7 +114,7 @@ public class WechatShareHandler extends SimpleShareHandler<ShareResult> implemen
             return;
         }
 
-        api.registerApp(Config.WECHAT_APPID);
+        api.registerApp(Config.get().getWechatAppId());
 
         WXWebpageObject webpageObject = new WXWebpageObject();
         webpageObject.webpageUrl = request.getLink();

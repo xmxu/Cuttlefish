@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.github.xmxu.cf.Callback;
 import com.github.xmxu.cf.Config;
@@ -29,8 +28,6 @@ import com.sina.weibo.sdk.constant.WBConstants;
 
 public class WeiboShareHandler extends SimpleShareHandler<ShareResult> implements IWeiboHandler.Response {
 
-    private static final String TAG = "WeiboShareHandler";
-
     private IWeiboShareAPI mWeiboShareApi;
 
     private Callback<ShareResult> mCallback;
@@ -47,7 +44,7 @@ public class WeiboShareHandler extends SimpleShareHandler<ShareResult> implement
 
         mCallback = callback;
         mTag = tag;
-        mWeiboShareApi = WeiboShareSDK.createWeiboAPI(activity.getApplicationContext(), Config.WEIBO_APPID);
+        mWeiboShareApi = WeiboShareSDK.createWeiboAPI(activity.getApplicationContext(), Config.get().getWeiboAppId());
         mWeiboShareApi.registerApp();
 
         final WeiboMultiMessage weiboMsg = new WeiboMultiMessage();
@@ -136,7 +133,6 @@ public class WeiboShareHandler extends SimpleShareHandler<ShareResult> implement
 
     @Override
     public void onResponse(BaseResponse baseResponse) {
-        Log.d(TAG, "onResponse() called with: baseResponse = [" + baseResponse + "]");
         switch (baseResponse.errCode) {
             case WBConstants.ErrorCode.ERR_OK:
                 if (mCallback != null) {

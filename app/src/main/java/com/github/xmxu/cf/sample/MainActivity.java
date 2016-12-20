@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.github.xmxu.cf.Callback;
 import com.github.xmxu.cf.Caller;
+import com.github.xmxu.cf.Config;
 import com.github.xmxu.cf.Cuttlefish;
 import com.github.xmxu.cf.LoginResult;
 import com.github.xmxu.cf.Result;

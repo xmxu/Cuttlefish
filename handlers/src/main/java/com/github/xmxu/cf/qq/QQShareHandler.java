@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
-import android.util.Log;
 
 import com.github.xmxu.cf.Callback;
 import com.github.xmxu.cf.Config;
 import com.github.xmxu.cf.Result;
-import com.github.xmxu.cf.ShareHandler;
 import com.github.xmxu.cf.ShareRequest;
 import com.github.xmxu.cf.ShareResult;
 import com.github.xmxu.cf.SimpleShareHandler;
@@ -65,7 +63,7 @@ public class QQShareHandler extends SimpleShareHandler<ShareResult> {
         this.mTag = tag;
         mIUiListener = new ShareListener();
         if (mTencent == null) {
-            mTencent = Tencent.createInstance(Config.QQ_APPID, activity.getApplicationContext());
+            mTencent = Tencent.createInstance(Config.get().getQQAppId(), activity.getApplicationContext());
         }
 
         if (mTencent == null) {
@@ -123,7 +121,6 @@ public class QQShareHandler extends SimpleShareHandler<ShareResult> {
 
         @Override
         public void onComplete(Object o) {
-            Log.d("QQLogic", "ShareComplete: " + o);
             if (mCallback != null) {
                 mCallback.onComplete(new ShareResult(Result.Code.OK, "Succeed", mTag));
             }
@@ -132,7 +129,6 @@ public class QQShareHandler extends SimpleShareHandler<ShareResult> {
 
         @Override
         public void onError(UiError uiError) {
-            Log.d("QQLogic", "ShareError: " + uiError);
             if (mCallback != null) {
                 mCallback.onFailure(new Result(uiError.errorCode, uiError.errorMessage, mTag));
             }
@@ -141,7 +137,6 @@ public class QQShareHandler extends SimpleShareHandler<ShareResult> {
 
         @Override
         public void onCancel() {
-            Log.d("QQLogic", "ShareCancel: ");
             if (mCallback != null) {
                 mCallback.onFailure(new Result(Result.Code.CANCEL, "Cancel", mTag));
             }

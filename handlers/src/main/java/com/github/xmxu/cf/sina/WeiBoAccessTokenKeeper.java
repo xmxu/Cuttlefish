@@ -28,7 +28,6 @@ public class WeiBoAccessTokenKeeper {
 	 */
 	public static void writeAccessToken(Context context, Oauth2AccessToken token) {
 		if (null == token) {
-			Log.d("TEST","token == null");
 			return;
 		}
 

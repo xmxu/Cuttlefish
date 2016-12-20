@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.github.xmxu.cf.Callback;
 import com.github.xmxu.cf.Config;
@@ -26,8 +25,6 @@ import org.json.JSONObject;
 public class QQLoginHandler extends SimpleLoginHandler<LoginResult> {
 
     private Tencent mTencent;
-
-    private String mScope = "get_simple_userinfo";
 
     private IUiListener mUiListener;
 
@@ -54,13 +51,13 @@ public class QQLoginHandler extends SimpleLoginHandler<LoginResult> {
         mUiListener = new BaseListener();
 
         if (mTencent == null) {
-            mTencent = Tencent.createInstance(Config.QQ_APPID, activity.getApplicationContext());
+            mTencent = Tencent.createInstance(Config.get().getQQAppId(), activity.getApplicationContext());
         }
 
         if (mTencent != null) {
             initTencentParams();
             if (!mTencent.isSessionValid()) {
-                mTencent.login(activity, mScope, mUiListener);
+                mTencent.login(activity, Config.get().getQQScope(), mUiListener);
             } else {
                 LoginResult result = new LoginResult();
                 result.setTag(mTag);
@@ -104,8 +101,6 @@ public class QQLoginHandler extends SimpleLoginHandler<LoginResult> {
         @Override
         public void onComplete(Object o) {
 
-            Log.d("QQLogic", "Object: " + o);
-
             //登录成功
             JSONObject json = (JSONObject) o;
             QQTokenKeeper.writeToken(mAppContext, json.toString());
@@ -123,7 +118,6 @@ public class QQLoginHandler extends SimpleLoginHandler<LoginResult> {
 
         @Override
         public void onError(UiError uiError) {
-            Log.d("QQLogic", "uiError: " + uiError);
             if (mCallback != null) {
                 mCallback.onFailure(new Result(uiError.errorCode, uiError.errorMessage, mTag));
             }
@@ -132,7 +126,6 @@ public class QQLoginHandler extends SimpleLoginHandler<LoginResult> {
 
         @Override
         public void onCancel() {
-            Log.d("QQLogic", "cancel: ");
             if (mCallback != null) {
                 mCallback.onFailure(new Result(Result.Code.CANCEL, "Cancel", mTag));
             }
