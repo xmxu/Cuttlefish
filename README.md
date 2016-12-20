@@ -1,6 +1,23 @@
 # Cuttlefish
 简单封装QQ、微信、微博的登录、分享功能
 
+###初始化配置
+```
+Config.get()
+//obligatory
+.qq("appId", "appKey").wechat("appId", "appKey").weibo("appId", "appKey")
+//optional
+.qqScope("scope").wechatScope("scope").weiboRedirectUrl("url").weiboScope("scope");
+	
+```
+
+#####微信
+```
+在程序包名根新建继承AbsWXEntryActivity的Acitivty，并配置到AndroidManifest.xml。
+
+```
+
+
 ###登录
 ```
 QQ登录	
