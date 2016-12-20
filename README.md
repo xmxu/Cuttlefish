@@ -21,9 +21,24 @@ Cuttlefish.with(context).share()
             .link("http://link...").callback(mShareResultCallback).to(QQShareHandler.get(QQShareHandler.QZONE));
 ```
 
+###Gradle
+1.Add it in your root build.gradle at the end of repositories:
+
+```
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+```
+2.Add the dependency
+
 ```
 dependencies {
-            compile 'com.github.XMXu.Cuttlefish:library:v1.0'
+            compile 'com.github.XMXu.Cuttlefish:library:v1.1'
+            compile 'com.github.XMXu.Cuttlefish:handlers:v1.1'
 }
 ```
 
